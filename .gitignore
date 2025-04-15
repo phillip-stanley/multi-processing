@@ -5,4 +5,5 @@ __pycache__
 file_processing/output/valid_files/*.json
 file_processing/output/invalid_files/*.json
 
+*/test_data/*.json
 test_data/*.json

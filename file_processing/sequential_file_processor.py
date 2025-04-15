@@ -1,10 +1,11 @@
+import os
 import shutil
 import json
 from pydantic import ValidationError
 
 from file_processing.models.models import User
 
-SRC_DIR = '../test_data'
+SRC_DIR = './test_data'
 VALID_DEST_DIR = './output/valid_files'
 INVALID_DEST_DIR = './output/invalid_files'
 
@@ -43,11 +44,17 @@ def read_and_validate_json(file_path: str) -> User:
             f"{INVALID_DEST_DIR}/{file_path}"
         )
 
+def process_json_files() -> None:
+    """Validate all JSON files in the supplied directory.
 
+    Returns:
+        None
+    """
+    for file in os.listdir(SRC_DIR):
+        if file.endswith('.json'):
+            read_and_validate_json(file)
 
 if __name__ == '__main__':
-    print('\n--- Testing with valid data ---')
-    valid_user = read_and_validate_json('valid_user.json')
-
-    print('\n--- Testing with invalid data ---')
-    invalid_user = read_and_validate_json('invalid_user.json')
+    print('\n--- validating data ---')
+    process_json_files()
+    print('\n--- completed validating data ---')
