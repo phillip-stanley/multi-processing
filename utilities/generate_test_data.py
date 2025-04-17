@@ -1,4 +1,3 @@
-import os
 import json
 import random
 import string
@@ -149,11 +148,6 @@ def generate_test_files(num_valid_files: int = 10, num_invalid_files: int = 5, b
     Returns:
         None
     """
-    # Generate the directories for storing valid and invalid files
-    # for the number of valid documents
-    ## create file with valid user
-
-    #valid_dir, invalid_dir = create_directories(base_dir)
     destination_dir = Path(base_dir)
 
     for i in range(num_valid_files):

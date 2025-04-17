@@ -1,6 +1,7 @@
 import os
 import shutil
 import json
+import multiprocessing
 from datetime import datetime
 from pydantic import ValidationError
 
@@ -21,7 +22,7 @@ def read_and_validate_json(file_path: str) -> None:
     Returns:
         None
     """
-    print('\n--- processing file ---')
+    print(f'\n--- processing file --- {multiprocessing.current_process().name}')
     try:
         with open(f"{SRC_DIR}/{file_path}", 'r') as file:
             data = json.load(file)
@@ -55,21 +56,17 @@ def process_json_files() -> datetime.time:
         None
     """
     start_time = datetime.now()
-    files_processed = 0
 
-    for file in os.listdir(SRC_DIR):
-        if file.endswith('.json'):
-            read_and_validate_json(file)
-            files_processed = files_processed + 1
+    files = os.listdir(SRC_DIR)
 
+    with multiprocessing.Pool() as pool:
+        pool.map(read_and_validate_json, files)
 
     end_time = datetime.now()
-    return end_time - start_time, files_processed
-
+    return end_time - start_time
 
 if __name__ == '__main__':
     print('\n--- validating data ---')
-    elapsed_time, files_processed = process_json_files()
+    elapsed_time = process_json_files()
     print('\n--- completed validating data ---')
-    print(f'\n--- files processed {files_processed} ---')
     print(f'\n--- time elapsed {elapsed_time} seconds ---')
