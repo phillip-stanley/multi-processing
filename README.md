@@ -11,6 +11,8 @@ for implementing concurrent processing in Python applications.
 - Installation
 - Project structure
 - Examples
-  - File processing
+  - File_processing
+    - squential_file_processor.py
+    - multi_processing_file_procesor.py
 
 ## Installation
